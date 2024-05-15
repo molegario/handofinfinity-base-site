@@ -95,29 +95,28 @@ const GalleryForm = ({
               <Masonry
                 items={initialData.galleryImages}
                 config={{
-                  columns: [1, 2, 3, 4],
+                  columns: [1, 2, 3, 3],
                   gap: [24, 12, 6, 6],
                   media: [640, 768, 1024, 1280],
                 }}
                 placeholder={<ContentCardSkeletonList itemcount={initialData?.galleryImages?.length ?? 0}/>}
                 render={(item) => (
                   <div
-                    className="relative aspect-video bg-slate-500 rounded-md"
+                    className="relative bg-slate-500 rounded-md"
                     key={item.id}
                   >
                     <Image
                       src={item.url}
                       alt={item.name}
-                      fill
-                      className="object-cover rounded-md"
-                      sizes="(max-width: 768px) 100vw"
-                      placeholder="blur"
-                      blurDataURL="background"
+                      className="rounded-md"
+                      layout="responsive"
+                      width={250}
+                      height={250}
                     />
                     {
                       deleteId !== item.id && (
                         <button 
-                          className="absolute right-0"
+                          className="absolute right-0 top-0"
                           onClick={() => onDelete(item.id)}
                         >
                           <CircleX 
