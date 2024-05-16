@@ -6,7 +6,7 @@ interface PostsGridProps {
 };
 
 const PostsGrid = ({
-  posts,
+  posts=[],
 }: PostsGridProps) => {
   return (
     <ul 

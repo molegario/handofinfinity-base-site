@@ -6,8 +6,10 @@ const MainLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="h-full flex flex-col mt-[75px]">
       <NavbarMain />
-      <div className="flex-1">
-        <main className="pt-0 h-full pl-0 pr-0 flex flex-col justify-center items-center">{children}</main>
+      <div className="flex-1 bg-[#EF5B2A]">
+        <main className="pt-0 h-full pl-0 pr-0 flex flex-col justify-center items-center">
+          {children}
+        </main>
       </div>
       <Footer />
     </div>
