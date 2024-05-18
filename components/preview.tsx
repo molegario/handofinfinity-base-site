@@ -1,29 +1,37 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import { useMemo } from "react";
-
-import "react-quill/dist/quill.bubble.css";
+import ReactMarkdown from "react-markdown";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 interface PreviewProps {
   value: string;
-};
+}
 
 const Preview = ({ value }: PreviewProps) => {
-  const ReactQuill = useMemo(
-    () => dynamic(
-      () => import("react-quill"),
-      { ssr: false }
-    ),
-    []
-  );
-
   return (
-    <ReactQuill 
-      theme="bubble"
-      value={value}
-      readOnly 
-    />
+    <>
+      <ReactMarkdown
+        children={value}
+        components={{
+          code(props) {
+            const { children, className, ...rest } = props;
+            const match = /language-(\w+)/.exec(className || "");
+            return match ? (
+              <SyntaxHighlighter
+                language={match[1]}
+                style={atomDark}
+                children={String(children).replace(/\n$/, "")}
+              />
+            ) : (
+              <code {...rest} className={className}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      />
+    </>
   );
 };
 

@@ -39,7 +39,7 @@ const SectionEditor = async (
   const requiredFields = [
     section.title,
     section.description,
-    section.videoUrl || section.imageUrl,
+    // section.videoUrl || section.imageUrl,
   ];
 
   const totalFields = requiredFields.length;

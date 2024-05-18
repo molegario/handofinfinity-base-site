@@ -13,7 +13,7 @@ const Hero = () => {
         />
       </div>
       <h1 className="text-center mb-5 text-4xl">
-        Welcome to a Collaborative Experiment
+        This site is proof that I have lived.
       </h1>
       <h3 className="text-center mb-5 text-xl">Hosted by TheCommonNonsense</h3>
       <p className="text-center mb-5 text-sm">

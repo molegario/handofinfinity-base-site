@@ -2,8 +2,9 @@
 
 import dynamic from "next/dynamic";
 import { useMemo } from "react";
+// import MDEditor from "@uiw/react-md-editor";
 
-import "react-quill/dist/quill.snow.css";
+// import "react-quill/dist/quill.snow.css";
 
 interface EditorProps {
   value: string;
@@ -11,14 +12,18 @@ interface EditorProps {
 }
 
 const Editor = ({ value, onChange }: EditorProps) => {
-  const ReactQuill = useMemo(
-    () => dynamic(() => import("react-quill"), { ssr: false }),
+  const MDEditor = useMemo(
+    () => dynamic(() => import("@uiw/react-md-editor"), { ssr: false }),
     []
   );
 
+  const onEditorChange = (value: string | undefined) => {
+    onChange(value || "");
+  };
+
   return (
     <div className="bg-white">
-      <ReactQuill theme="snow" value={value} onChange={onChange} />
+      <MDEditor value={value} onChange={onEditorChange} />
     </div>
   );
 };

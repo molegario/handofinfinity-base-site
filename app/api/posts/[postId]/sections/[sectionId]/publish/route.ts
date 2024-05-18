@@ -32,17 +32,18 @@ export async function PATCH(
       },
     });
 
-    const muxData = await db.muxData.findUnique({
-      where: {
-        sectionId: sectionId,
-      },
-    });
+    // const muxData = await db.muxData.findUnique({
+    //   where: {
+    //     sectionId: sectionId,
+    //   },
+    // });
 
     if (
       !section ||
       !section.title ||
-      !section.description ||
-      !((section.videoUrl && muxData) || section.imageUrl)
+      !section.description 
+      // ||
+      // !((section.videoUrl && muxData) || section.imageUrl)
     ) {
       return new NextResponse("Missing required fields", { status: 404 });
     }
