@@ -16,6 +16,9 @@ async function main() {
         { name: "Music" },
         { name: "Food" },
         { name: "Health" },
+        { name: "Anime" },
+        { name: "Art" },
+        { name: "Books" },
       ],
     });
     console.log("Success seeding categories!");

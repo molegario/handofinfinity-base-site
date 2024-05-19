@@ -32,25 +32,36 @@ const PostDetails = async ({ params }: { params: { postId: string } }) => {
     day: 'numeric'
   });
 
+  const humanReadableDateSmall = new Date(post.createdAt).toLocaleDateString(
+    "en-CA",
+    {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+    }
+  );
   // console.log("POSTS::", post);
 
   return (
     <>
-      <div className="p-6 w-[80rem] h-full flex flex-col">
+      <div className="p-6 w-full lg:w-[80rem] h-full flex flex-col">
         <div className="flex items-end justify-between flex-none">
           <div className="flex flex-col gap-y-2 justify-start">
-            <h1 className="text-4xl font-medium text-white">
+            <h1 className="text-3xl md:text-4xl font-medium text-white">
               {post?.title || `untitled: postID: ${params.postId}`}
             </h1>
             <span className="text-white font-medium">by TheCommonNonsense</span>
+            <h2 className="text-sm md:hidden text-white font-semibold">
+              {humanReadableDateSmall}
+            </h2>
           </div>
           <div className="flex flex-col justify-start">
-            <h2 className="text-xl text-white font-semibold">
+            <h2 className="text-sm hidden md:inline md:text-xl text-white font-semibold">
               {humanReadableDate}
             </h2>
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6 mt-8 flex-1">
+        <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 mt-8 flex-1">
           <div className="space-y-6 border rounded-md border-slate-300 bg-stone-200 inset-3 p-4">
             <div>
               {post?.sections.map((section) => (
@@ -87,11 +98,7 @@ const PostDetails = async ({ params }: { params: { postId: string } }) => {
               )}
               <div className="flex justify-between">
                 <h2 className="text-2xl mb-4">TLDR</h2>
-                {
-                  post?.category?.name && (
-                    <h2>{post?.category?.name}</h2>
-                  )
-                }
+                {post?.category?.name && <h2>{post?.category?.name}</h2>}
               </div>
               <p>{post?.description}</p>
             </div>
