@@ -1,9 +1,13 @@
+import CommentsList from "@/app/(search)/_components/comments-list";
+import NewComment from "@/app/(search)/_components/new-comment";
 import Preview from "@/components/preview";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { db } from "@/lib/db";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+// import LoadingContextProvider from "@/store/loading-context";
 
 const SearchPostDetails = async ({ params }: { params: { postId: string } }) => {
   const post = await db.post.findUnique({
@@ -20,6 +24,7 @@ const SearchPostDetails = async ({ params }: { params: { postId: string } }) => 
           position: "asc",
         },
       },
+      comments: true,
     },
   });
 
@@ -108,10 +113,26 @@ const SearchPostDetails = async ({ params }: { params: { postId: string } }) => 
                 />
               )}
               <div className="flex justify-between">
-                <h2 className="text-2xl mb-4">TLDR</h2>
-                {post?.category?.name && <h2>{post?.category?.name}</h2>}
+                {/* <h2 className="text-2xl mb-4">Category</h2> */}
+                {post?.category?.name && (
+                  <h2 className="text-2xl mb-4">
+                    Category: {post?.category?.name}
+                  </h2>
+                )}
               </div>
-              <p>{post?.description}</p>
+              <Tabs defaultValue="tldr" className="w-full">
+                <TabsList className="mb-0 mt-5">
+                  <TabsTrigger value="tldr">TLDR</TabsTrigger>
+                  <TabsTrigger value="comment">Comment</TabsTrigger>
+                </TabsList>
+                <TabsContent className="mb-0 py-4" value="tldr">
+                  <p>{post?.description}</p>
+                </TabsContent>
+                <TabsContent className="mb-0 py-4 flex flex-col gap-y-4" value="comment">
+                  <NewComment postId={post.id} />
+                  <CommentsList comments={post.comments.reverse()}/>
+                </TabsContent>
+              </Tabs>
             </div>
           </div>
         </div>

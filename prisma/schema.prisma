@@ -26,7 +26,8 @@ model Post {
   category Category? @relation(fields: [categoryId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   sections Section[]
   galleryImages GalleryImage[]
-  attachments Attachment[]  
+  attachments Attachment[]
+  comments Comment[]
   subscriptions Subscription[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,6 +64,16 @@ model Attachment {
   updatedAt DateTime @updatedAt
 
   @@index(postId)
+}
+
+model Comment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  email String?
+  name String?
+  userId String
+  postId String @db.ObjectId
+  post Post @relation(fields: [postId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  text String
 }
 
 model Section {
