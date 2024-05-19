@@ -1,5 +1,4 @@
 import { db } from "@/lib/db";
-import AllPosts from "../../_components/all-posts";
 import { getPosts } from "@/actions/get-posts";
 import PostsGrid from "../../_components/posts-grid/posts-grid";
 import Categories from "../../_components/categories";

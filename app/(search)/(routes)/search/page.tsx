@@ -2,25 +2,21 @@ import { getPosts } from "@/actions/get-posts";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-import SearchInput from "../../_components/search-input";
-import Categories from "../../_components/categories";
-import PostsGrid from "../../_components/posts-grid/posts-grid";
-
+import SearchInput from "../../../(main)/_components/search-input";
+import Categories from "../../../(main)/_components/categories";
+import PostsGrid from "../../../(main)/_components/posts-grid/posts-grid";
 
 interface SearchPageProps {
   searchParams: {
     title: string;
     categoryId: string;
   };
-};
+}
 
 const SearchPage = async ({ searchParams }: SearchPageProps) => {
+  const { userId } = auth();
 
-  const {
-    userId,
-  } = auth();
-
-  if(!userId) {
+  if (!userId) {
     return redirect("/sign-in");
   }
 
@@ -45,10 +41,10 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         <h1 className="text-center text-2xl m-8 text-[#EF5B2A] font-semibold">
           All Posts
         </h1>
-        <PostsGrid posts={posts} />
+        <PostsGrid posts={posts} postpath="/search/posts" />
       </div>
     </section>
   );
-}
- 
+};
+
 export default SearchPage;

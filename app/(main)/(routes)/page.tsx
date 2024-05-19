@@ -7,8 +7,6 @@ import { db } from "@/lib/db";
 
 export default async function Home() {
 
-
-
   const posts = await db.post.findMany({
     include: {
       category: true,
@@ -17,9 +15,6 @@ export default async function Home() {
       createdAt: "desc",
     },
   });
-
-
-
 
   return (
     <>

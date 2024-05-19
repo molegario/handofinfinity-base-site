@@ -4,13 +4,18 @@ import Link from "next/link";
 
 interface PostItemProps {
   post: Post;
+  postpath?: string;
 };
 
-const PostItem = ({post}: PostItemProps) => {
+const PostItem = ({
+  post,
+  postpath = "/posts"
+}: PostItemProps) => {
+
   return (
     <li className="shadow-md text-center rounded-md bg-slate-100 min-h-[360px] max-h-[360px] flex flex-col">
       <Link
-        href={`/posts/${post.id}`}
+        href={`${postpath}/${post.id}`}
         className="flex flex-col h-full w-full justify-between"
       >
         {!!post.imageUrl && (

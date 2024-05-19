@@ -5,8 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-const PostDetails = async ({ params }: { params: { postId: string } }) => {
-
+const SearchPostDetails = async ({ params }: { params: { postId: string } }) => {
   const post = await db.post.findUnique({
     where: {
       id: params.postId,
@@ -24,15 +23,18 @@ const PostDetails = async ({ params }: { params: { postId: string } }) => {
     },
   });
 
-  if(!post) {
-    return redirect('/posts');
+  if (!post) {
+    return redirect("/posts");
   }
 
-  const humanReadableDate = new Date(post.createdAt).toLocaleDateString('en-CA', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
+  const humanReadableDate = new Date(post.createdAt).toLocaleDateString(
+    "en-CA",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    }
+  );
 
   const humanReadableDateSmall = new Date(post.createdAt).toLocaleDateString(
     "en-CA",
@@ -50,11 +52,11 @@ const PostDetails = async ({ params }: { params: { postId: string } }) => {
         <div className="flex items-end justify-between flex-none">
           <div className="flex flex-col gap-y-2 justify-start">
             <Link
-              href="/posts"
-              className="flex items-center text-xl font-semibold hover:opacity-75 transition mb-2"
+              href="/search"
+              className="flex items-center text-xl font-semibold hover:opacity-75 transition mb-2 text-[#EF5B2A]"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
-              All posts
+              Back to search
             </Link>
             <h1 className="text-3xl md:text-4xl font-medium text-white">
               {post?.title || `untitled: postID: ${params.postId}`}
@@ -116,6 +118,6 @@ const PostDetails = async ({ params }: { params: { postId: string } }) => {
       </div>
     </>
   );
-}
- 
-export default PostDetails;
+};
+
+export default SearchPostDetails;

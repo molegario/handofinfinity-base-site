@@ -3,10 +3,12 @@ import PostItem from "./post-item";
 
 interface PostsGridProps {
   posts: Post[];
+  postpath?: string;
 };
 
 const PostsGrid = ({
   posts=[],
+  postpath="/posts"
 }: PostsGridProps) => {
   return (
     <ul 
@@ -17,7 +19,7 @@ const PostsGrid = ({
     >
       {
         posts.map(post=>{
-          return <PostItem key={post.id} post={post} />;
+          return <PostItem key={post.id} post={post} postpath={postpath}/>;
         })
       }
     </ul>
