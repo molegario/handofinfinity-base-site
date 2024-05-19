@@ -113,7 +113,6 @@ const SearchPostDetails = async ({ params }: { params: { postId: string } }) => 
                 />
               )}
               <div className="flex justify-between">
-                {/* <h2 className="text-2xl mb-4">Category</h2> */}
                 {post?.category?.name && (
                   <h2 className="text-2xl mb-4">
                     Category: {post?.category?.name}
