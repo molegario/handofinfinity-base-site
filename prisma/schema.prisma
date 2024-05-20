@@ -128,9 +128,9 @@ model UserProgress {
 
 model Member {
   id String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String
+  userId String @unique
   name String
-  email String
+  email String?
   displayname String?
   phone String?
   Privileges String[]

@@ -48,7 +48,7 @@ export function useMediaValues(
         mediaQuery.removeEventListener("change", onSizeChange);
       }
     };
-  }, [values.columns, values.gap]);
+  }, [columns, gap, medias]);
 
   return values;
 }

@@ -37,7 +37,7 @@ const SearchPage = async ({ searchParams }: SearchPageProps) => {
         <Categories categories={categories} />
         <SearchInput />
       </div>
-      <div className="w-[90%] max-w-[80rem] mx-2 mb-[8rem] py-[4rem]">
+      <div className="w-[90%] max-w-[80rem] mx-2 mb-[8rem] py-[14rem] md:py-[6rem]">
         <h1 className="text-center text-2xl m-8 text-[#EF5B2A] font-semibold">
           All Posts
         </h1>

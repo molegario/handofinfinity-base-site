@@ -1,11 +1,14 @@
+import { cn } from "@/lib/utils";
 import { Comment } from "@prisma/client";
 
 interface CommentsListProps {
   comments: Comment[];
+  userId?: string;
 };
 
 const CommentsList = ({
-  comments=[]
+  comments=[],
+  userId,
 }: CommentsListProps) => {
   return (
     <>
@@ -14,7 +17,13 @@ const CommentsList = ({
           <h2 className="text-xl mb-4">Comments</h2>
           <ul className="flex flex-col gap-1 w-full">
             {comments.map((comment) => (
-              <li key={comment.id} className="text-lg flex flex-col w-full mb-4">
+              <li
+                key={comment.id}
+                className={cn(
+                  "text-lg flex flex-col w-full mb-4",
+                  userId === comment.userId ? "text-[#EF5B2A]" : "text-stone-800"
+                )}
+              >
                 <p className="w-full">
                   {comment.text ? (
                     <>&ldquo;{comment.text}&rdquo;</>
@@ -23,7 +32,12 @@ const CommentsList = ({
                   )}
                 </p>
                 <div className="w-full flex text-xs ml-4">
-                  by <address className="ml-1">{comment.userId}</address>
+                  by{" "}
+                  <address className="ml-1">
+                    {comment.name && comment?.name?.length > 0
+                      ? comment.name
+                      : "anon"}
+                  </address>
                 </div>
               </li>
             ))}

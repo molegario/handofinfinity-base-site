@@ -11,19 +11,33 @@ export async function POST(
 
 
     const reqObj = await req.json();
-    const { comment } = reqObj; 
+    const { comment, commenterName } = reqObj; 
 
-    console.log("AUTH::", userId, "::", comment, "::", reqObj);
+    console.log("AUTH::", userId, "::", comment, "::", commenterName, "::", reqObj);
 
     if (!userId) {
       return new NextResponse("Unauthorized access", { status: 401 });
     }
+
+    await db.member.upsert({
+      where: {
+        userId: userId,
+      },
+      update: {
+        name: commenterName,
+      },
+      create: {
+        userId: userId,
+        name: commenterName,
+      },
+    });
 
     const datacomment = await db.comment.create({
       data: {
         postId: params.postId,
         userId: userId,
         text: comment,
+        name: commenterName,
       },
     });
 

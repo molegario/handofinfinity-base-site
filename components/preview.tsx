@@ -12,17 +12,15 @@ const Preview = ({ value }: PreviewProps) => {
   return (
     <>
       <ReactMarkdown
-        children={value}
+        // children={value}
         components={{
           code(props) {
             const { children, className, ...rest } = props;
             const match = /language-(\w+)/.exec(className || "");
             return match ? (
-              <SyntaxHighlighter
-                language={match[1]}
-                style={atomDark}
-                children={String(children).replace(/\n$/, "")}
-              />
+              <SyntaxHighlighter language={match[1]} style={atomDark}>
+                {String(children).replace(/\n$/, "")}
+              </SyntaxHighlighter>
             ) : (
               <code {...rest} className={className}>
                 {children}
@@ -30,7 +28,7 @@ const Preview = ({ value }: PreviewProps) => {
             );
           },
         }}
-      />
+      >{value}</ReactMarkdown>
     </>
   );
 };

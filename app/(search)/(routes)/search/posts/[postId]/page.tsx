@@ -3,6 +3,7 @@ import NewComment from "@/app/(search)/_components/new-comment";
 import Preview from "@/components/preview";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { db } from "@/lib/db";
+import { auth } from "@clerk/nextjs";
 import { ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,21 @@ import { redirect } from "next/navigation";
 // import LoadingContextProvider from "@/store/loading-context";
 
 const SearchPostDetails = async ({ params }: { params: { postId: string } }) => {
+
+  const { userId } = auth();
+
+  if (!userId) {
+    return redirect("/sign-in");
+  }
+
+  // member name
+  const member = await db.member.findUnique({
+    where: {
+      userId: userId,
+    },
+  });
+  const memberName = member?.name || "";
+
   const post = await db.post.findUnique({
     where: {
       id: params.postId,
@@ -127,9 +143,12 @@ const SearchPostDetails = async ({ params }: { params: { postId: string } }) => 
                 <TabsContent className="mb-0 py-4" value="tldr">
                   <p>{post?.description}</p>
                 </TabsContent>
-                <TabsContent className="mb-0 py-4 flex flex-col gap-y-4" value="comment">
-                  <NewComment postId={post.id} />
-                  <CommentsList comments={post.comments.reverse()}/>
+                <TabsContent
+                  className="mb-0 py-4 flex flex-col gap-y-4"
+                  value="comment"
+                >
+                  <NewComment postId={post.id} memberName={memberName} />
+                  <CommentsList comments={post.comments.reverse()} userId={userId} />
                 </TabsContent>
               </Tabs>
             </div>
