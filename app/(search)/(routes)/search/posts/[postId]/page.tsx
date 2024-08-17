@@ -160,3 +160,34 @@ const SearchPostDetails = async ({ params }: { params: { postId: string } }) => 
 };
 
 export default SearchPostDetails;
+
+type Props = {
+  params: {
+    postId: string;
+  };
+  searchParams: { [key:string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({
+  params,
+  searchParams,
+}: Props) {
+
+  const post = await db.post.findUnique({
+    where: {
+      id: params.postId,
+    },
+  });
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+      description: "Post Not Found",
+    };
+  }
+
+  return {
+    title: `Postarama: ${post.title}`,
+    description: post.description || "No description",
+  };
+}
